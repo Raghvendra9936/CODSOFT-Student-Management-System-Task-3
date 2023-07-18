@@ -1,0 +1,240 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+// import javafx.application.Application;
+// import javafx.geometry.Insets;
+// import javafx.geometry.Pos;
+// import javafx.scene.Scene;
+// import javafx.scene.control.Button;
+// import javafx.scene.control.ButtonType;
+// import javafx.scene.control.Dialog;
+// import javafx.scene.control.Label;
+// import javafx.scene.layout.VBox;
+// import javafx.stage.Stage;
+
+public class StudentManagementSystem {
+    private List<Student> students;
+
+
+    // For a graphical user interface (GUI) using libraries JavaFX.1
+    
+
+// public class StudentManagementSystem extends Application {
+//     private List<Student> students;
+
+
+
+//     @Override
+//     public void start(Stage primaryStage) {
+//         students = new StudentManagementSystem();
+
+//         // Create UI components
+//         Label titleLabel = new Label("Student Management System");
+//         titleLabel.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
+
+//         Button addButton = new Button("Add Student");
+//         addButton.setOnAction(e -> showAddStudentDialog());
+
+//         Button removeButton = new Button("Remove Student");
+//         removeButton.setOnAction(e -> showRemoveStudentDialog());
+
+//         Button searchButton = new Button("Search Student");
+//         searchButton.setOnAction(e -> showSearchStudentDialog());
+
+//         Button displayButton = new Button("Display All Students");
+//         displayButton.setOnAction(e -> showDisplayStudentsDialog());
+
+//         VBox layout = new VBox(10);
+//         layout.setAlignment(Pos.CENTER);
+//         layout.setPadding(new Insets(20));
+//         layout.getChildren().addAll(titleLabel, addButton, removeButton, searchButton, displayButton);
+
+//         Scene scene = new Scene(layout, 400, 300);
+
+//         primaryStage.setTitle("Student Management System");
+//         primaryStage.setScene(scene);
+//         primaryStage.show();
+//     }
+
+//     private void showAddStudentDialog() {
+//         // Create and show a dialog for adding a student
+//         Dialog<ButtonType> dialog = new Dialog<>();
+//         dialog.setTitle("Add Student");
+
+//         // Create dialog components (labels, text fields, buttons, etc.) and handle user input
+
+//         dialog.showAndWait();
+//     }
+
+//     private void showRemoveStudentDialog() {
+//         // Create and show a dialog for removing a student
+//         Dialog<ButtonType> dialog = new Dialog<>();
+//         dialog.setTitle("Remove Student");
+
+//         // Create dialog components (labels, text fields, buttons, etc.) and handle user input
+
+//         dialog.showAndWait();
+//     }
+
+//     private void showSearchStudentDialog() {
+//         // Create and show a dialog for searching a student
+//         Dialog<ButtonType> dialog = new Dialog<>();
+//         dialog.setTitle("Search Student");
+
+//         // Create dialog components (labels, text fields, buttons, etc.) and handle user input
+
+//         dialog.showAndWait();
+//     }
+
+//     private void showDisplayStudentsDialog() {
+//         // Create and show a dialog for displaying all students
+//         Dialog<ButtonType> dialog = new Dialog<>();
+//         dialog.setTitle("Display All Students");
+
+//         // Create dialog components (labels, tables, buttons, etc.) and handle user input
+
+//         dialog.showAndWait();
+    
+// }
+
+    
+
+    public  StudentManagementSystem() {
+        students = new ArrayList<>();
+    }
+
+    public void addStudent(Student student) {
+        students.add(student);
+        System.out.println("Student added successfully!");
+    }
+
+    public void removeStudent(int rollNumber) {
+        boolean removed = false;
+        for (Student student : students) {
+            if (student.getRollNumber() == rollNumber) {
+                students.remove(student);
+                removed = true;
+                System.out.println("Student removed successfully!");
+                break;
+            }
+        }
+        if (!removed) {
+            System.out.println("Student with roll number " + rollNumber + " not found!");
+        }
+    }
+
+    public void searchStudent(int rollNumber) {
+        for (Student student : students) {
+            if (student.getRollNumber() == rollNumber) {
+                System.out.println("Student found:");
+                System.out.println(student);
+                return;
+            }
+        }
+        System.out.println("Student with roll number " + rollNumber + " not found!");
+    }
+
+    public void displayAllStudents() {
+        if (students.isEmpty()) {
+            System.out.println("No students found!");
+            return;
+        }
+        System.out.println("All Students:");
+        for (Student student : students) {
+            System.out.println(student);
+        }
+    }
+
+    public static class Student {
+    private String name;
+    private int rollNumber;
+    private String grade;
+
+    public Student(String name, int rollNumber, String grade) {
+        this.name = name;
+        this.rollNumber = rollNumber;
+        this.grade = grade;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getRollNumber() {
+        return rollNumber;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+     @Override
+        public String toString() {
+            return "Name: " + name +
+                    ", Roll Number: " + rollNumber +
+                    ", Grade: " + grade;
+        }
+}
+
+
+
+
+
+    public static void main(String[] args) {
+        // launch(args);
+        Scanner scanner = new Scanner(System.in);
+        StudentManagementSystem system = new StudentManagementSystem();
+
+        boolean exit = false;
+        while (!exit) {
+            System.out.println("Student Management System");
+            System.out.println("1. Add Student");
+            System.out.println("2. Remove Student");
+            System.out.println("3. Search Student");
+            System.out.println("4. Display All Students");
+            System.out.println("5. Exit");
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter name: ");
+                    String name = scanner.nextLine();
+                    System.out.print("Enter roll number: ");
+                    int rollNumber = scanner.nextInt();
+                    scanner.nextLine(); // Consume newline
+                    System.out.print("Enter grade: ");
+                    String grade = scanner.nextLine();
+                    Student student = new Student( name, rollNumber, grade);
+                    system.addStudent(student);
+                    break;
+                case 2:
+                    System.out.print("Enter roll number of student to remove: ");
+                    int removeRollNumber = scanner.nextInt();
+                    system.removeStudent(removeRollNumber);
+                    break;
+                case 3:
+                    System.out.print("Enter roll number of student to search: ");
+                    int searchRollNumber = scanner.nextInt();
+                    system.searchStudent(searchRollNumber);
+                    break;
+                case 4:
+                    system.displayAllStudents();
+                    break;
+                case 5:
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("Invalid choice! Please try again.");
+            }
+            System.out.println("----------------------");
+        }
+
+        System.out.println("Thank you for using the Student Management System!");
+        scanner.close();
+    }
+}
+
+
